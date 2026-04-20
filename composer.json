@@ -8,6 +8,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "doctrine/doctrine-bundle": "^3.2",
+        "doctrine/doctrine-fixtures-bundle": "^4.3",
         "doctrine/doctrine-migrations-bundle": "^4.0",
         "doctrine/orm": "^3.6",
         "phpdocumentor/reflection-docblock": "^6.0",
@@ -24,6 +25,7 @@
         "symfony/http-client": "8.0.*",
         "symfony/intl": "8.0.*",
         "symfony/mailer": "8.0.*",
+        "symfony/maker-bundle": "^1.67",
         "symfony/mime": "8.0.*",
         "symfony/monolog-bundle": "^3.0|^4.0",
         "symfony/notifier": "8.0.*",
@@ -32,6 +34,7 @@
         "symfony/property-info": "8.0.*",
         "symfony/runtime": "8.0.*",
         "symfony/security-bundle": "8.0.*",
+        "symfony/security-csrf": "8.0.*",
         "symfony/serializer": "8.0.*",
         "symfony/stimulus-bundle": "^3.0",
         "symfony/string": "8.0.*",
@@ -102,7 +105,6 @@
         "symfony/browser-kit": "8.0.*",
         "symfony/css-selector": "8.0.*",
         "symfony/debug-bundle": "8.0.*",
-        "symfony/maker-bundle": "^1.0",
         "symfony/stopwatch": "8.0.*",
         "symfony/web-profiler-bundle": "8.0.*"
     }

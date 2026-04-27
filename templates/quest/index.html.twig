@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Quests - Shadow Realms{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1 class="text-warning mb-4">Available Quests</h1>
+
+    <div class="row">
+        {% for quest in availableQuests %}
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{{ quest.title }}</h5>
+                    <p class="card-text">{{ quest.description|slice(0, 120) }}...</p>
+                    <p><strong>Required Level:</strong> {{ quest.requiredLevel }}</p>
+                    <p><strong>Reward:</strong> {{ quest.rewardExp }} XP + {{ quest.rewardGold }} Gold</p>
+                </div>
+                <div class="card-footer">
+                    <a href="{{ path('app_quest_show', {'id': quest.id}) }}" class="btn btn-outline-light">View Details</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <h2 class="text-warning mt-5">Your Active Quests</h2>
+    {% if playerQuests is empty %}
+        <p>You have no active quests.</p>
+    {% endif %}
+
+    {% for quest in playerQuests %}
+        {% if quest.status == 'accepted' %}
+        <div class="alert alert-info">
+            <strong>{{ quest.title }}</strong> - {{ quest.description }}
+            <form method="post" action="{{ path('app_quest_complete', {'id': quest.id}) }}" class="d-inline">
+                <button type="submit" class="btn btn-success btn-sm float-end">Complete Quest</button>
+            </form>
+        </div>
+        {% endif %}
+    {% endfor %}
+</div>
+{% endblock %}

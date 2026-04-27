@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard - Shadow Realms{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <div class="row">
+        <!-- Hero Card -->
+        <div class="col-md-4">
+            <div class="card bg-dark text-light border-warning">
+                <div class="card-header text-center">
+                    <h3>{{ player.name }}</h3>
+                    <span class="badge bg-warning fs-5">{{ player.characterClass.value }}</span>
+                </div>
+                <div class="card-body">
+                    <p><strong>Level:</strong> {{ player.level }} 
+                       <span class="badge bg-info">XP: {{ player.experience }}</span>
+                    </p>
+                    
+                    <div class="mb-3">
+                        <strong>Health:</strong>
+                        <div class="progress">
+                            <div class="progress-bar bg-danger" role="progressbar" 
+                                 style="width: {{ (player.health / player.maxHealth * 100)|round }}%;">
+                                {{ player.health }} / {{ player.maxHealth }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <p><strong>Attack:</strong> {{ player.attack }} | <strong>Defense:</strong> {{ player.defense }}</p>
+                    <p><strong>Gold:</strong> <span class="text-warning">💰 {{ player.gold }}</span></p>
+                </div>
+                <div class="card-footer text-center">
+                    <a href="{{ path('app_player_profile') }}" class="btn btn-outline-light">View Full Profile</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Navigation -->
+        <div class="col-md-8">
+            <h2 class="text-warning mb-4">What do you want to do, {{ player.name }}?</h2>
+            
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="card h-100 bg-dark border-success">
+                        <div class="card-body text-center">
+                            <h4>🗡️ Quests</h4>
+                            <p class="text-muted">Accept and complete quests to gain XP and gold</p>
+                            <a href="{{path('app_quest_index')}}" class="btn btn-success btn-lg w-100">Go to Quests</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card h-100 bg-dark border-danger">
+                        <div class="card-body text-center">
+                            <h4>⚔️ Battle</h4>
+                            <p class="text-muted">Fight monsters in the wild</p>
+                            <a href="{{path('app_battle_encounter')}}" class="btn btn-danger btn-lg w-100">Enter Battle</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card h-100 bg-dark border-info">
+                        <div class="card-body text-center">
+                            <h4>🎒 Inventory</h4>
+                            <p class="text-muted">Manage your items and equipment</p>
+                            <a href="#" class="btn btn-info btn-lg w-100">Open Inventory</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card h-100 bg-dark border-warning">
+                        <div class="card-body text-center">
+                            <h4>🛒 Shop</h4>
+                            <p class="text-muted">Buy weapons, armor and potions</p>
+                            <a href="#" class="btn btn-warning btn-lg w-100">Visit Shop</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

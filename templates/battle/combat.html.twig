@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Battle - Shadow Realms{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1 class="text-danger mb-4">⚔️ Battle Arena</h1>
+
+    <div class="row">
+        <!-- Player -->
+        <div class="col-md-5">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h4>{{ player.name }} (Level {{ player.level }})</h4>
+                </div>
+                <div class="card-body">
+                    <p><strong>Health:</strong> {{ player.health }} / {{ player.maxHealth }}</p>
+                    <div class="progress mb-3">
+                        <div class="progress-bar bg-danger" style="width: {{ (player.health / player.maxHealth * 100)|round }}%"></div>
+                    </div>
+                    <p>Attack: {{ player.attack }} | Defense: {{ player.defense }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Monster -->
+        <div class="col-md-5 offset-md-1">
+            <div class="card">
+                <div class="card-header bg-dark text-danger">
+                    <h4>{{ monster.name }}</h4>
+                </div>
+                <div class="card-body">
+                    <p><strong>Health:</strong> <span id="monster-health">{{ monster.health }}</span></p>
+                    <div class="progress mb-3">
+                        <div id="monster-health-bar" class="progress-bar bg-danger" style="width: 100%"></div>
+                    </div>
+                    <p>Attack: {{ monster.attack }} | Defense: {{ monster.defense }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4 text-center">
+        <button onclick="performAction('attack')" class="btn btn-danger btn-lg mx-2">⚔️ Attack</button>
+        <button onclick="performAction('flee')" class="btn btn-secondary btn-lg mx-2">🏃 Flee</button>
+    </div>
+
+    <div id="battle-log" class="mt-4 p-3 bg-dark text-light" style="height: 200px; overflow-y: auto;"></div>
+</div>
+
+<script>
+function performAction(action) {
+    fetch('/battle/action', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'action=' + action
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Add to log
+        const logDiv = document.getElementById('battle-log');
+        data.log.forEach(msg => {
+            logDiv.innerHTML += '<p>' + msg + '</p>';
+        });
+        logDiv.scrollTop = logDiv.scrollHeight;
+
+        // Update health
+        document.getElementById('monster-health').textContent = data.monsterHealth;
+        document.getElementById('monster-health-bar').style.width = Math.max(0, data.monsterHealth) + '%';
+        if (data.battleOver) {
+            setTimeout(() => location.reload(), 1500);
+        }
+    });
+}
+</script>
+{% endblock %}

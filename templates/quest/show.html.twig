@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ quest.title }}{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="card">
+        <div class="card-header bg-dark text-warning">
+            <h3>{{ quest.title }}</h3>
+        </div>
+        <div class="card-body">
+            <p>{{ quest.description }}</p>
+            <p><strong>Required Level:</strong> {{ quest.requiredLevel }}</p>
+            <p><strong>Reward:</strong> {{ quest.rewardExp }} XP + {{ quest.rewardGold }} Gold</p>
+        </div>
+        <div class="card-footer">
+            {% if quest.status == 'available' and player.level >= quest.requiredLevel %}
+                <form method="post" action="{{ path('app_quest_accept', {'id': quest.id}) }}">
+                    <button type="submit" class="btn btn-success">Accept Quest</button>
+                </form>
+            {% elseif quest.status == 'accepted' %}
+                <p class="text-success">You have accepted this quest.</p>
+            {% endif %}
+            <a href="{{ path('app_quest_index') }}" class="btn btn-secondary">Back to Quests</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

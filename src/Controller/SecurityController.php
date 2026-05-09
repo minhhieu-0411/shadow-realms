@@ -22,7 +22,6 @@ class SecurityController extends AbstractController
             'error' => $authenticationUtils->getLastAuthenticationError(),
         ]);
     }
-
     #[Route('/logout', name: 'app_logout')]
 public function logout(Request $request, TokenStorageInterface $tokenStorage): Response
 {

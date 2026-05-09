@@ -31,8 +31,6 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
     ) {
     }
 
-    // Removed supports() method → use the default from AbstractLoginFormAuthenticator
-
     public function authenticate(Request $request): Passport
     {
         $email = $request->request->get('email', '');

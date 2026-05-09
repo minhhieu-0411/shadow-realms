@@ -12,9 +12,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class InventoryController extends AbstractController
 {
-    // =========================
-    // SHOW INVENTORY
-    // =========================
+   
     #[Route('/inventory', name: 'inventory_index')]
     #[IsGranted('ROLE_USER')]
     public function index(Security $security): Response
@@ -27,9 +25,6 @@ class InventoryController extends AbstractController
         ]);
     }
 
-    // =========================
-    // USE POTION
-    // =========================
     #[Route('/inventory/use/{id}', name: 'inventory_use', methods: ['POST'])]
     #[IsGranted('ROLE_USER')]
     public function useItem(
@@ -70,10 +65,6 @@ class InventoryController extends AbstractController
 
         return $this->redirectToRoute('inventory_index');
     }
-
-    // =========================
-    // EQUIP ITEM
-    // =========================
     #[Route('/inventory/equip/{id}', name: 'inventory_equip', methods: ['POST'])]
     #[IsGranted('ROLE_USER')]
     public function equip(
@@ -125,9 +116,6 @@ class InventoryController extends AbstractController
         return $this->redirectToRoute('inventory_index');
     }
 
-    // =========================
-    // UNEQUIP ITEM
-    // =========================
     #[Route('/inventory/unequip/{id}', name: 'inventory_unequip', methods: ['POST'])]
     #[IsGranted('ROLE_USER')]
     public function unequip(

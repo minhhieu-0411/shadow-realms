@@ -80,5 +80,4 @@ public function edit(
         'player' => $player,
     ]);
 }
-    
 }

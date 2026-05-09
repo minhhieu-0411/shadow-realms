@@ -1,0 +1,113 @@
+{# templates/admin/dashboard.html.twig #}
+
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block content %}
+
+<style>
+    .rpg-dashboard {
+        background: #0f0f1a;
+        color: #fff;
+        padding: 20px;
+        border-radius: 12px;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    .card {
+        background: #1c1c2b;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.4);
+        transition: 0.2s;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        background: #24243a;
+    }
+
+    .title {
+        font-size: 18px;
+        margin-bottom: 10px;
+        color: #9b87f5;
+    }
+
+    .value {
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .actions {
+        margin-top: 30px;
+    }
+
+    .btn {
+        padding: 10px 15px;
+        border-radius: 8px;
+        background: #6c5ce7;
+        color: white;
+        text-decoration: none;
+        margin-right: 10px;
+        display: inline-block;
+    }
+
+    .btn:hover {
+        background: #5a4bd6;
+    }
+</style>
+
+<div class="rpg-dashboard">
+
+    <h1>🔥 RPG Admin Dashboard</h1>
+    <p>Control your world, monsters, players, and items</p>
+
+    <div class="grid">
+
+        <div class="card">
+            <div class="title">👤 Total Users</div>
+            <div class="value">{{ usersCount ?? '0' }}</div>
+        </div>
+
+        <div class="card">
+            <div class="title">🧙 Total Players</div>
+            <div class="value">{{ playersCount ?? '0' }}</div>
+        </div>
+
+        <div class="card">
+            <div class="title">👹 Monsters</div>
+            <div class="value">{{ monstersCount ?? '0' }}</div>
+        </div>
+
+        <div class="card">
+            <div class="title">🎒 Items</div>
+            <div class="value">{{ itemsCount ?? '0' }}</div>
+        </div>
+
+        <div class="card">
+            <div class="title">⚔ Battles Today</div>
+            <div class="value">--</div>
+        </div>
+
+        <div class="card">
+            <div class="title">💰 Total Gold</div>
+            <div class="value">--</div>
+        </div>
+
+    </div>
+
+    <div class="actions">
+        <a href="/admin?crudAction=index&crudControllerFqcn=App\\Controller\\Admin\\UserCrudController" class="btn">Manage Users</a>
+        <a href="/admin?crudAction=index&crudControllerFqcn=App\\Controller\\Admin\\PlayerCrudController" class="btn">Manage Players</a>
+        <a href="/admin?crudAction=index&crudControllerFqcn=App\\Controller\\Admin\\MonsterCrudController" class="btn">Manage Monsters</a>
+        <a href="/admin?crudAction=index&crudControllerFqcn=App\\Controller\\Admin\\ItemCrudController" class="btn">Manage Items</a>
+    </div>
+
+</div>
+
+{% endblock %}

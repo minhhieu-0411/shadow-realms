@@ -40,9 +40,9 @@ class RegistrationFormType extends AbstractType
                 'mapped'  => false,
                 'label'   => 'Character Class',
                 'choices' => [
-                    'Warrior ⚔️' => CharacterClass::WARRIOR,
-                    'Mage ✨'     => CharacterClass::MAGE,
-                    'Rogue 🗡️'    => CharacterClass::ROGUE,
+                    'Warrior ' => CharacterClass::WARRIOR,
+                    'Mage '     => CharacterClass::MAGE,
+                    'Rogue '    => CharacterClass::ROGUE,
                 ],
                 'attr' => ['class' => 'form-select'],
             ])

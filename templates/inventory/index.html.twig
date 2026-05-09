@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inventory{% endblock %}
+
+{% block body %}
+<h2 class="text-warning mb-4">🎒 Inventory</h2>
+
+<div class="row">
+    {% for inv in inventory %}
+        <div class="col-md-3">
+            <div class="card p-3 mb-4 text-center">
+
+                <h5 class="text-warning">{{ inv.item.name }}</h5>
+
+                <p>Qty: {{ inv.quantity }}</p>
+
+                <p>
+                    {% if inv.item.attackBonus %}
+                        ⚔️ +{{ inv.item.attackBonus }}
+                    {% endif %}
+                    {% if inv.item.defenseBonus %}
+                        🛡 +{{ inv.item.defenseBonus }}
+                    {% endif %}
+                </p>
+
+                {# ================= EQUIPPED ================= #}
+                {% if inv.equipped %}
+                    <span class="badge bg-success mb-2">Equipped</span>
+
+                    <form method="post" action="{{ path('inventory_unequip', {id: inv.id}) }}">
+                        <button class="btn btn-danger w-100">Unequip</button>
+                    </form>
+
+                {# ================= NOT EQUIPPED ================= #}
+                {% else %}
+                    {% if inv.item.type.value != 'potion' %}
+                        <form method="post" action="{{ path('inventory_equip', {id: inv.id}) }}">
+                            <button class="btn btn-primary w-100">Equip</button>
+                        </form>
+                    {% else %}
+                        <span class="badge bg-info mb-2">Consumable</span>
+
+                        <form method="post" action="{{ path('inventory_use', {id: inv.id}) }}">
+                            <button class="btn btn-success w-100">Use</button>
+                        </form>
+                    {% endif %}
+                {% endif %}
+
+                <form method="post"
+                      action="{{ path('inventory_discard', {id: inv.id}) }}"
+                      onsubmit="return confirm('Are you sure you want to discard this item?');">
+
+                    <button class="btn btn-outline-danger w-100 mt-2">
+                        Discard
+                    </button>
+                </form>
+
+            </div>
+        </div>
+    {% else %}
+        <p>No items in inventory.</p>
+    {% endfor %}
+</div>
+{% endblock %}

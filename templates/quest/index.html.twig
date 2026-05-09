@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Quests - Shadow Realms{% endblock %}
+{% block title %}Quests{% endblock %}
 
 {% block body %}
 <div class="container">
@@ -11,13 +11,28 @@
         <div class="col-md-6 mb-4">
             <div class="card h-100">
                 <div class="card-body">
-                    <h5 class="card-title">{{ quest.title }}</h5>
-                    <p class="card-text">{{ quest.description|slice(0, 120) }}...</p>
-                    <p><strong>Required Level:</strong> {{ quest.requiredLevel }}</p>
-                    <p><strong>Reward:</strong> {{ quest.rewardExp }} XP + {{ quest.rewardGold }} Gold</p>
+                    <h5>{{ quest.title }}</h5>
+                    <p>{{ quest.description|slice(0, 100) }}...</p>
+
+                    <p>Level: {{ quest.requiredLevel }}</p>
+                    <p>Reward: {{ quest.rewardExp }} XP + {{ quest.rewardGold }} Gold</p>
                 </div>
+
                 <div class="card-footer">
-                    <a href="{{ path('app_quest_show', {'id': quest.id}) }}" class="btn btn-outline-light">View Details</a>
+
+                    <!-- Accept directly -->
+                    {% if player.level >= quest.requiredLevel %}
+                        <form method="post" action="{{ path('app_quest_accept', {'id': quest.id}) }}">
+                            <button class="btn btn-success">Accept</button>
+                        </form>
+                    {% else %}
+                        <span class="text-danger">Level too low</span>
+                    {% endif %}
+
+                    <a href="{{ path('app_quest_show', {'id': quest.id}) }}" class="btn btn-outline-light mt-2">
+                        Details
+                    </a>
+
                 </div>
             </div>
         </div>
@@ -25,16 +40,18 @@
     </div>
 
     <h2 class="text-warning mt-5">Your Active Quests</h2>
+
     {% if playerQuests is empty %}
-        <p>You have no active quests.</p>
+        <p>No active quests.</p>
     {% endif %}
 
     {% for quest in playerQuests %}
-        {% if quest.status == 'accepted' %}
+        {% if quest.status.value == 'accepted' %}
         <div class="alert alert-info">
-            <strong>{{ quest.title }}</strong> - {{ quest.description }}
-            <form method="post" action="{{ path('app_quest_complete', {'id': quest.id}) }}" class="d-inline">
-                <button type="submit" class="btn btn-success btn-sm float-end">Complete Quest</button>
+            <strong>{{ quest.title }}</strong>
+
+            <form method="post" action="{{ path('app_quest_complete', {'id': quest.id}) }}">
+                <button class="btn btn-success btn-sm float-end">Complete</button>
             </form>
         </div>
         {% endif %}

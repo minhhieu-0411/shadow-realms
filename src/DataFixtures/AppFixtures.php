@@ -20,7 +20,7 @@ class AppFixtures extends Fixture
             ['name' => 'Goblin Scout', 'health' => 45, 'attack' => 14, 'defense' => 6, 'exp' => 25, 'gold' => 15],
             ['name' => 'Forest Wolf', 'health' => 60, 'attack' => 18, 'defense' => 8, 'exp' => 35, 'gold' => 20],
             ['name' => 'Skeleton Warrior', 'health' => 70, 'attack' => 22, 'defense' => 10, 'exp' => 45, 'gold' => 25],
-            ['name' => 'Dark Imp', 'health' => 50, 'attack' => 25, 'defense' => 5, 'exp' => 40, 'gold' => 30],
+             ['name' => 'Dark Imp', 'health' => 50, 'attack' => 25, 'defense' => 5, 'exp' => 40, 'gold' => 30],
             ['name' => 'Stone Golem', 'health' => 120, 'attack' => 15, 'defense' => 25, 'exp' => 80, 'gold' => 50],
         ];
 
@@ -75,6 +75,5 @@ class AppFixtures extends Fixture
 
         $manager->flush();
 
-        echo "✅ Fixtures loaded successfully! Monsters, Items, and Quests are ready.\n";
     }
 }

@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Shop{% endblock %}
+
+{% block body %}
+<h2 class="mb-4 text-warning">
+    <i class="fas fa-store"></i> Shop
+</h2>
+
+<div class="row">
+    {% for item in items %}
+        <div class="col-md-3">
+            <div class="card p-3 mb-4 text-center shadow">
+
+                <h5 class="fw-bold text-warning">
+                    {{ item.name }}
+                </h5>
+
+                <p>
+                    💰 Price: <strong>{{ item.value }}</strong> Gold
+                </p>
+
+                <p class="small">
+                    {% if item.attackBonus %}
+                        ⚔️ +{{ item.attackBonus }} ATK<br>
+                    {% endif %}
+                    {% if item.defenseBonus %}
+                        🛡 +{{ item.defenseBonus }} DEF
+                    {% endif %}
+                </p>
+
+                <form method="post" action="{{ path('shop_buy', {id: item.id}) }}">
+                    <button class="btn btn-success w-100">
+                        <i class="fas fa-shopping-cart"></i> Buy
+                    </button>
+                </form>
+
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

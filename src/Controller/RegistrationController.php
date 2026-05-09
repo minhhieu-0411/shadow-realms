@@ -18,36 +18,31 @@ class RegistrationController extends AbstractController
     #[Route('/register', name: 'app_register')]
     public function register(
         Request $request,
-        UserPasswordHasherInterface $userPasswordHasher,
+        UserPasswordHasherInterface $hasher,
         Security $security,
-        EntityManagerInterface $entityManager
-    ): Response
-    {
+        EntityManagerInterface $em
+    ): Response {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Hash the password
-            $plainPassword = $form->get('plainPassword')->getData();
-            $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
 
+            $user->setPassword(
+                $hasher->hashPassword($user, $form->get('plainPassword')->getData())
+            );
 
-            $playerName = $form->get('playerName')->getData();
-            $characterClass = $form->get('characterClass')->getData();
-
-            // Create and link Player
             $player = new Player();
-            $player->setName($playerName);
-            $player->setCharacterClass($characterClass);
+            $player->setName($form->get('playerName')->getData());
+            $player->setCharacterClass($form->get('characterClass')->getData());
+
             $player->setUser($user);
-            $user->setPlayer($player);   
+            $user->setPlayer($player);
 
-            $entityManager->persist($user);
-            $entityManager->persist($player);
-            $entityManager->flush();
+            $em->persist($user);
+            $em->flush();
 
-            // Auto-login the user after registration
             return $security->login($user, 'App\\Security\\AppAuthenticator', 'main');
         }
 

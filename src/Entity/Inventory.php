@@ -24,6 +24,10 @@ class Inventory
     #[ORM\Column]
     private int $quantity = 1;
 
+    // ✅ NEW FIELD
+    #[ORM\Column]
+    private bool $equipped = false;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -71,6 +75,18 @@ class Inventory
     public function decreaseQuantity(int $amount = 1): static
     {
         $this->quantity = max(0, $this->quantity - $amount);
+        return $this;
+    }
+
+    // ✅ EQUIP METHODS
+    public function isEquipped(): bool
+    {
+        return $this->equipped;
+    }
+
+    public function setEquipped(bool $equipped): static
+    {
+        $this->equipped = $equipped;
         return $this;
     }
 }

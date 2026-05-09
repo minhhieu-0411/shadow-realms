@@ -228,15 +228,12 @@ class Player
         return $this;
     }
 
-    // ======================
-    // RPG Helper Methods
-    // ======================
 
     public function addExperience(int $exp): void
     {
         $this->experience += $exp;
 
-        // Simple level up logic (you can move this to a service later)
+
         $requiredExp = $this->level * 100;
         while ($this->experience >= $requiredExp) {
             $this->levelUp();

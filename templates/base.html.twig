@@ -46,7 +46,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
             <a class="navbar-brand fw-bold text-warning" href="{{ path('app_player_dashboard') }}">
-                <i class="fas fa-dragon"></i> Shadow Realms
+                <i class=""></i> Shadow Realms
             </a>
             
             <div class="navbar-nav ms-auto">
@@ -58,8 +58,8 @@
                     <a class="nav-link" href="{{ path('app_player_dashboard') }}">Dashboard</a>
                     <a class="nav-link" href="{{path('app_quest_index')}}">Quests</a>
                     <a class="nav-link" href="{{path('app_battle_encounter')}}">Battle</a>
-                    <a class="nav-link" href="#">Inventory</a>
-                    <a class="nav-link" href="#">Shop</a>
+                    <a class="nav-link" href="{{ path('inventory_index') }}">Inventory</a>
+                    <a class="nav-link" href="{{ path('shop_index') }}">Shop</a>
                     
                     <a class="nav-link text-danger ms-3" href="{{ path('app_logout') }}">
                         <i class="fas fa-sign-out-alt"></i> Logout

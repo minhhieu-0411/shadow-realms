@@ -5,23 +5,34 @@
 {% block body %}
 <div class="container">
     <div class="card">
-        <div class="card-header bg-dark text-warning">
+        <div class="card-header text-warning">
             <h3>{{ quest.title }}</h3>
         </div>
+
         <div class="card-body">
             <p>{{ quest.description }}</p>
-            <p><strong>Required Level:</strong> {{ quest.requiredLevel }}</p>
-            <p><strong>Reward:</strong> {{ quest.rewardExp }} XP + {{ quest.rewardGold }} Gold</p>
+            <p>Required Level: {{ quest.requiredLevel }}</p>
+            <p>Reward: {{ quest.rewardExp }} XP + {{ quest.rewardGold }} Gold</p>
         </div>
+
         <div class="card-footer">
-            {% if quest.status == 'available' and player.level >= quest.requiredLevel %}
+
+            {% if quest.status.value == 'available' and player.level >= quest.requiredLevel %}
                 <form method="post" action="{{ path('app_quest_accept', {'id': quest.id}) }}">
-                    <button type="submit" class="btn btn-success">Accept Quest</button>
+                    <button class="btn btn-success">Accept Quest</button>
                 </form>
-            {% elseif quest.status == 'accepted' %}
-                <p class="text-success">You have accepted this quest.</p>
+
+            {% elseif quest.status.value == 'accepted' %}
+                <p class="text-success">Already accepted</p>
+
+            {% elseif quest.status.value == 'completed' %}
+                <p class="text-warning">Completed</p>
             {% endif %}
-            <a href="{{ path('app_quest_index') }}" class="btn btn-secondary">Back to Quests</a>
+
+            <a href="{{ path('app_quest_index') }}" class="btn btn-secondary mt-2">
+                Back
+            </a>
+
         </div>
     </div>
 </div>

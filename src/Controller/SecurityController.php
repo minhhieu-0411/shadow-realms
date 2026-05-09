@@ -1,13 +1,12 @@
 <?php
 
 namespace App\Controller;
-
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class SecurityController extends AbstractController
 {
@@ -18,25 +17,18 @@ class SecurityController extends AbstractController
             return $this->redirectToRoute('app_player_dashboard');
         }
 
-        $error = $authenticationUtils->getLastAuthenticationError();
-        $lastUsername = $authenticationUtils->getLastUsername();
-
         return $this->render('security/login.html.twig', [
-            'last_username' => $lastUsername,
-            'error'         => $error,
+            'last_username' => $authenticationUtils->getLastUsername(),
+            'error' => $authenticationUtils->getLastAuthenticationError(),
         ]);
     }
 
     #[Route('/logout', name: 'app_logout')]
-    public function logout(Request $request, TokenStorageInterface $tokenStorage): Response
-    {
-        // Clear the security token
-        $tokenStorage->setToken(null);
+public function logout(Request $request, TokenStorageInterface $tokenStorage): Response
+{
+    $tokenStorage->setToken(null);
+    $request->getSession()->invalidate();
 
-        // Invalidate the current session
-        $request->getSession()->invalidate();
-
-        // Redirect to login page
-        return $this->redirectToRoute('app_login');
-    }
+    return $this->redirectToRoute('app_login');
+}
 }
